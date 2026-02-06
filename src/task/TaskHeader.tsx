@@ -1,4 +1,5 @@
 import type { SyntheticEvent } from "react";
+import Button from "../Button";
 
 export interface TaskHeaderProps {
     title: string;
@@ -33,9 +34,13 @@ function TaskHeader({
                         autoFocus
                     />
                     <button type="submit">Save</button>
-                    <button type="button" onClick={onCancel}>
-                        Cancel
-                    </button>
+                    <Button
+                        type="button"
+                        className="card-control"
+                        icon="cancel"
+                        label="Cancel"
+                        onClick={onCancel}
+                    />
                 </form>
             ) : (
                 <p className="card-title">{title}</p>

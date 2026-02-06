@@ -204,7 +204,6 @@ main {
 .step-handle {
   opacity: 0;
   cursor: grab;
-  opacity: 0;
 }
 
 .step:hover .step-handle {

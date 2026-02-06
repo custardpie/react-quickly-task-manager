@@ -2,12 +2,10 @@ import Button from "../Button.tsx";
 
 import { useState } from "react";
 import type { SyntheticEvent } from "react";
+import { useTasks } from "./TasksContext";
 
-export interface TaskAddProps {
-  onAddTask: (title: string) => void;
-}
-
-function TaskAdd({ onAddTask }: Readonly<TaskAddProps>) {
+function TaskAdd() {
+  const { addTask } = useTasks();
   const [title, setTitle] = useState("");
 
   const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
@@ -16,7 +14,7 @@ function TaskAdd({ onAddTask }: Readonly<TaskAddProps>) {
     if (!trimmedTitle) {
       return;
     }
-    onAddTask(trimmedTitle);
+    addTask(trimmedTitle);
     setTitle("");
   };
 
