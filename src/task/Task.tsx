@@ -1,74 +1,24 @@
+import Button from "./Button";
 import TaskHeader from "./TaskHeader";
-import { useEffect, useState } from "react";
 
-export type TaskType = {
-  id: string;
-  title: string;
-};
-
-export interface TaskProps extends TaskType {
-  onDeleteTask: (taskId: string) => void;
-  onCommitTitle: (taskId: string, nextTitle: string) => void;
+type TaskProps = {
+  name : string
 }
 
-function Task({
-  id,
-  title,
-  onDeleteTask,
-  onCommitTitle,
-}: Readonly<TaskProps>) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [draftTitle, setDraftTitle] = useState(title);
-
-  useEffect(() => {
-    if (!isEditing) {
-      setDraftTitle(title);
-    }
-  }, [title, isEditing]);
-
-  const handleStartEdit = () => {
-    setDraftTitle(title);
-    setIsEditing(true);
-  };
-
-  const handleCancel = () => {
-    setIsEditing(false);
-    setDraftTitle(title);
-  };
-
-  const handleSave = () => {
-    const trimmedTitle = draftTitle.trim();
-    if (!trimmedTitle) {
-      return;
-    }
-    onCommitTitle(id, trimmedTitle);
-    setIsEditing(false);
-  };
-
+function Task({name} : Readonly<TaskProps>) {
   return (
-    <li key={id} className="card">
-        <TaskHeader
-          title={title}
-          isEditing={isEditing}
-          draftTitle={draftTitle}
-          onDraftTitleChange={setDraftTitle}
-          onSave={handleSave}
-          onCancel={handleCancel}
-        />
+      <li className="card">
+        <TaskHeader name = {name} />
         <ul className="card-controls">
-            <li>
-              <button className="card-control" onClick={handleStartEdit}>
-                Edit
-              </button>
-            </li>
-            <li>
-              <button className="card-control" onClick={() => onDeleteTask(id)}>
-                Delete
-              </button>
-            </li>
+          <li>
+            <Button action="Edit task" icon="pencil" />
+          </li>
+          <li>
+            <Button action="Delete task" icon="trash" />
+          </li>
         </ul>
-    </li>
-  );
+      </li>
+  )
 }
 
 export default Task;
