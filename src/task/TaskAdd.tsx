@@ -26,7 +26,7 @@ function TaskAdd({ onAdd } : Readonly<TaskAddProps>) {
               name="title"
               value={input}
               onChange={e => setInput(e.target.value)} />
-            <Button action="Add task" icon="plus" />
+            <Button label="Add task" icon="plus" />
           </form>
         </header>
       </li>

@@ -21,11 +21,11 @@ function Task({name, onDelete, onEdit} : Readonly<TaskProps>) {
         <TaskHeader name = {name} updateTask={handleUpdate} isEditable={isEditing} />
         <ul className="card-controls">
           <li>
-            <Button action="Edit task" icon="pencil" 
+            <Button label="Edit task" icon="pencil" 
               onClick={() => setIsEditing(true)}/>
           </li>
           <li>
-            <Button action="Delete task" icon="trash" 
+            <Button label="Delete task" icon="trash" 
               onClick={onDelete} />
           </li>
         </ul>

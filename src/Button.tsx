@@ -1,12 +1,13 @@
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    action : string,
+    className?: string,
+    label : string,
     icon : string
 }
 
-function Button({ action, icon, ...rest }: ButtonProps) {
+function Button({ className = "", label, icon, ...rest }: ButtonProps) {
     return (
-        <button className="icon-button" {...rest}>
-            <img src={`icons/${icon}.svg`} alt={action} />
+        <button className={`icon-button ${className}`} {...rest}>
+            <img src={`icons/${icon}.svg`} alt={label} />
         </button>
     );
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Task from "./Task";
 import TaskAdd from "./TaskAdd";
 import { initialTasks } from "./fixture";
@@ -9,8 +9,22 @@ export type TaskType = {
   title: string;
 };
 
+function getInitialTasks() : TaskType[] {                            
+  return (
+    JSON.parse(localStorage.getItem("task-manager-items-list") as string) ||
+      initialTasks
+  );
+}
+
 function TaskList() {
-  const [tasks, setTasks] = useState(initialTasks);
+  const [tasks, setTasks] = useState(getInitialTasks());
+
+  useEffect(() => {                                    
+    localStorage.setItem(                               
+      "task-manager-items-list",                        
+      JSON.stringify(tasks)                             
+    );                                                  
+  }, [tasks]);  
 
   function addTask(title: string) {
     const newTask: TaskType = {

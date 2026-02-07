@@ -14,7 +14,6 @@ function TaskHeader({name, isEditable, updateTask} : Readonly<TaskHeaderProps>) 
     e.preventDefault();
     if (input.trim()) {
       updateTask(input.trim());
-      setInput("");
     }
   };
 
@@ -25,7 +24,7 @@ function TaskHeader({name, isEditable, updateTask} : Readonly<TaskHeaderProps>) 
           <input className="card-title card-title-input" 
             value={input} 
             onChange={e => setInput(e.target.value)} />
-          <Button action="Update task" icon="save" />
+          <Button label="Update task" icon="save" />
         </form> :
         <p className="card-title">{name}</p>
     }
