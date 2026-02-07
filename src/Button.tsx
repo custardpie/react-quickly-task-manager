@@ -1,15 +1,12 @@
-import React from "react";
-
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    icon: string;
-    label: string;
-    className?: string;
-};
+    action : string,
+    icon : string
+}
 
-function Button({ className = "", icon, label, ...rest }: Readonly<ButtonProps>) {
+function Button({ action, icon, ...rest }: ButtonProps) {
     return (
-        <button className={`icon-button ${className}`} {...rest}>
-            <img draggable={false} src={`icons/${icon}.svg`} alt={label} />
+        <button className="icon-button" {...rest}>
+            <img src={`icons/${icon}.svg`} alt={action} />
         </button>
     );
 }

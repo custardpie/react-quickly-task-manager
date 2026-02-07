@@ -1,20 +1,32 @@
-import Button from "./Button";
+import { useState } from "react";
+import Button from "../Button";
 import TaskHeader from "./TaskHeader";
 
 type TaskProps = {
-  name : string
+  name : string,
+  onDelete : () => void,
+  onEdit : (newTitle: string) => void
 }
 
-function Task({name} : Readonly<TaskProps>) {
+function Task({name, onDelete, onEdit} : Readonly<TaskProps>) {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleUpdate = (newTitle: string) => {
+    onEdit(newTitle);
+    setIsEditing(false);
+  }
+
   return (
       <li className="card">
-        <TaskHeader name = {name} />
+        <TaskHeader name = {name} updateTask={handleUpdate} isEditable={isEditing} />
         <ul className="card-controls">
           <li>
-            <Button action="Edit task" icon="pencil" />
+            <Button action="Edit task" icon="pencil" 
+              onClick={() => setIsEditing(true)}/>
           </li>
           <li>
-            <Button action="Delete task" icon="trash" />
+            <Button action="Delete task" icon="trash" 
+              onClick={onDelete} />
           </li>
         </ul>
       </li>
