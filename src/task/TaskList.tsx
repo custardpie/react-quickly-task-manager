@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer } from "react";
 import Task from "./Task";
 import TaskAdd from "./TaskAdd";
 import { initialTasks } from "./fixture";
@@ -9,6 +9,21 @@ export type TaskType = {
   title: string;
 };
 
+function reducer(state: TaskType[], action: { type: string; payload: any }) {
+  switch (action.type) {
+    case "ADD_TASK":
+      return [...state, {id: uuidv4(), title: action.payload.title }];
+    case "DELETE_TASK":
+      return state.filter(task => task.id !== action.payload);
+    case "EDIT_TASK":
+      return state.map(task => 
+        task.id === action.payload.id ? { ...task, title: action.payload.title } : task
+      );
+    default:
+      return state;
+  }
+}
+
 function getInitialTasks() : TaskType[] {                            
   return (
     JSON.parse(localStorage.getItem("task-manager-items-list") as string) ||
@@ -17,7 +32,7 @@ function getInitialTasks() : TaskType[] {
 }
 
 function TaskList() {
-  const [tasks, setTasks] = useState(getInitialTasks());
+  const [tasks, dispatch] = useReducer(reducer, getInitialTasks());
 
   useEffect(() => {                                    
     localStorage.setItem(                               
@@ -26,31 +41,14 @@ function TaskList() {
     );                                                  
   }, [tasks]);  
 
-  function addTask(title: string) {
-    const newTask: TaskType = {
-      id: uuidv4(),
-      title,
-    };
-    setTasks([...tasks, newTask]);
-  }
-
-  function deleteTask(id: string) {
-    setTasks(tasks.filter(task => task.id !== id));
-  }
-
-  function editTask(id: string, newTitle: string) {
-    setTasks(tasks.map(task => 
-      task.id === id ? { ...task, title: newTitle } : task
-    ));
-  }
 
   return (
     <ol className="lane">
       {tasks.map((task) => 
         <Task key={task.id} name={task.title} 
-          onDelete={() => deleteTask(task.id)}
-          onEdit={(newTitle) => editTask(task.id, newTitle)} />)}
-      <TaskAdd onAdd={addTask} />
+          onDelete={() => dispatch({ type: "DELETE_TASK", payload: task.id })}
+          onEdit={(newTitle) => dispatch({ type: "EDIT_TASK", payload: { id: task.id, title: newTitle } })} />)}
+      <TaskAdd onAdd={(title) => dispatch({ type: "ADD_TASK", payload: { title } })} />
     </ol>
   );
 }
