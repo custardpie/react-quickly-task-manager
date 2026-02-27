@@ -1,15 +1,13 @@
 import Task from "./Task";
 import TaskAdd from "./TaskAdd";
-import useTask, { type TaskType }  from "./useTask";
+import useTask, { type TaskType } from "./useTask";
 
 function TaskList() {
-  const {
-    state: { tasks },
-  } = useTask() as { state: { tasks: TaskType[] }; actions: any };
+  const { state: { tasks } } = useTask();
 
   return (
     <ol className="lane">
-      {tasks.map((task) => 
+      {tasks.map((task: TaskType) => 
         <Task key={task.id} id={task.id} />)}
       <TaskAdd />
     </ol>

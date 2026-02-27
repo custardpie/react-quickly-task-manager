@@ -236,3 +236,62 @@ progress[value]::-webkit-progress-bar {
   border-radius: 2px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
+
+.card-steps {
+  list-style: decimal;
+  list-style-position: inside;
+  margin: 8px 0 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-steps .step {
+  padding-left: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.card-steps .step label {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.step-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-steps .step .step-handle {
+  width: 12px;
+  text-align: center;
+  cursor: grab;
+  opacity: 0.6;
+  user-select: none;
+}
+
+.card-steps .step:hover .step-handle {
+  opacity: 1;
+}
+
+.card-add-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 0 0;
+  padding-left: 40px;
+}
+
+.card-add-step input {
+  flex: 1;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
