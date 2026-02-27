@@ -1,17 +1,26 @@
 http://github.com/rq2e/rq2e/tree/main/ch13/rq13-list
 
-In this step of the project, we’ll add the actual functionality to the structure that was outlined in the scaffold. After completing this step, we want to have a simple task manager that can do the following:
+The goal for this step is to complete the following:
 
-Show a list of tasks
+Add an ordered list of “completable” steps inside each task.
 
-Allow the user to add a new task by writing the task title
+At the bottom of the list, always include an input field to allow the user to add a new item to the end of the list.
 
-Allow the user to delete a task
+For each step in the list, add a checkbox to mark the step as completed or not, as well as a button to delete the step.
 
-Allow the user to rename a task
+Allow the user to hide and show the steps of a task (hidden by default).
 
-We’ll do this in two steps:
+Summarize the completion of the task with a progress bar that shows the ratio of the steps in the task that have been completed. This progress bar should be visible even if the list of steps is hidden.
 
-Split the single big component into multiple smaller components that make sense in terms of component size, responsibility, and visual representation.
+Here are a few hints to help you complete this objective:
 
-Make the application stateful, so it starts with a predefined list, and users can then append, delete, and update tasks as they see fit.
+While we could get away with keeping the state as a simple array maintained by a useState hook, we need more fine-grained control of the state now, so convert the state to a reducer, and add actions for the different updates necessary, for example: addTask, editTask, deleteTask, addStep, editStep, and deleteStep.
+
+You might also want to wrap the task list in a context provider to make access to the preceding actions easier inside nested components.
+
+To add a progress bar, use the <progress /> HTML element. It’s simple to use and already styled in the existing CSS file in the scaffold.
+
+To display a list of steps with a checkbox, use the proper semantic HTML elements for all of those things (<ol />, <li />, <label />, and <input type="checkbox" /> would be a good start).
+
+Adding a new step requires a form with an input and a button. That should be pretty straightforward at this point.
+https://github.com/rq2e/rq2e/tree/main/ch13/rq13-steps

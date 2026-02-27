@@ -1,17 +1,18 @@
 import { useState, type SubmitEventHandler } from "react";
 import Button from "../Button";
+import useTask, { type TaskType }  from "./useTask";
 
-type TaskAddProps = {
-  onAdd: (title: string) => void;
-};
+function TaskAdd() {
+  const {
+    actions: { addTask },
+  } = useTask() as { state: { tasks: TaskType[] }; actions: any };
 
-function TaskAdd({ onAdd } : Readonly<TaskAddProps>) {
   const [input, setInput] = useState("");
 
   const handleSubmit: SubmitEventHandler = (e) => {
     e.preventDefault();
     if (input.trim()) {
-      onAdd(input.trim());
+      addTask(input.trim());
       setInput("");
     }
   };
@@ -26,7 +27,7 @@ function TaskAdd({ onAdd } : Readonly<TaskAddProps>) {
               name="title"
               value={input}
               onChange={e => setInput(e.target.value)} />
-            <Button label="Add task" icon="plus" />
+            <Button label="Add task" icon="plus" type="submit" />
           </form>
         </header>
       </li>

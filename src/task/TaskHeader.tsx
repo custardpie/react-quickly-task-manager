@@ -1,32 +1,39 @@
-import { useState, type SubmitEventHandler } from "react";
+import { type SubmitEventHandler } from "react";
 import Button from "../Button";
+import useTask, {type TaskType } from "./useTask";
 
 type TaskHeaderProps = {
-  name : string,
+  id : string,
   isEditable: boolean,
-  updateTask : (newTitle: string) => void
+  setEditable : (editable: boolean) => void
 }
 
-function TaskHeader({name, isEditable, updateTask} : Readonly<TaskHeaderProps>) {
-  const [input, setInput] = useState(name);
+function TaskHeader({id, isEditable, setEditable} : Readonly<TaskHeaderProps>) {
+  const {
+    state: { tasks },
+    actions: { editTask },
+  } = useTask() as { state: { tasks: TaskType[] }; actions: any };
+
+  const task = tasks.find((task: TaskType) => task.id === id);
   
-  const handleSubmit: SubmitEventHandler = (e) => {
+  const handleEditTask: SubmitEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    if (input.trim()) {
-      updateTask(input.trim());
-    }
+    const formData = new FormData(e.currentTarget);
+    const title = formData.get("title") as string;
+    editTask(id, title);
+    setEditable(false);
   };
 
   return (
     <header className="card-header">
       {isEditable ?
-        <form className="card-title-form" onSubmit={handleSubmit}>
+        <form className="card-title-form" onSubmit={handleEditTask}>
           <input className="card-title card-title-input" 
-            value={input} 
-            onChange={e => setInput(e.target.value)} />
+            defaultValue={task?.title}
+            name="title" />
           <Button label="Update task" icon="save" />
         </form> :
-        <p className="card-title">{name}</p>
+        <p className="card-title">{task?.title}</p>
     }
     </header>
   )

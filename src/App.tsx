@@ -1,13 +1,14 @@
-
 import './style.css'
-import { TaskList }  from './task'
+import { TaskList } from './task'
+import TaskProvider from './task/TaskProvider'
 
 function App() {
-
   return (
     <main>
       <h1>Task Manager</h1>
-      <TaskList />
+      <TaskProvider>
+        <TaskList />
+      </TaskProvider>
     </main>
   )
 }

@@ -1,24 +1,22 @@
 import { useState } from "react";
 import Button from "../Button";
 import TaskHeader from "./TaskHeader";
+import useTask, { type TaskType } from "./useTask";
 
 type TaskProps = {
-  name : string,
-  onDelete : () => void,
-  onEdit : (newTitle: string) => void
+  id : string
 }
 
-function Task({name, onDelete, onEdit} : Readonly<TaskProps>) {
+function Task({id} : Readonly<TaskProps>) {
+  const {
+    actions: { deleteTask },
+  } = useTask()  as { state: { tasks: TaskType[] }; actions: any };
+  
   const [isEditing, setIsEditing] = useState(false);
-
-  const handleUpdate = (newTitle: string) => {
-    onEdit(newTitle);
-    setIsEditing(false);
-  }
 
   return (
       <li className="card">
-        <TaskHeader name = {name} updateTask={handleUpdate} isEditable={isEditing} />
+        <TaskHeader id = {id} setEditable={setIsEditing} isEditable={isEditing} />
         <ul className="card-controls">
           <li>
             <Button label="Edit task" icon="pencil" 
@@ -26,7 +24,7 @@ function Task({name, onDelete, onEdit} : Readonly<TaskProps>) {
           </li>
           <li>
             <Button label="Delete task" icon="trash" 
-              onClick={onDelete} />
+              onClick={() => deleteTask(id)} />
           </li>
         </ul>
       </li>
